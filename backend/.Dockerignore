@@ -1,1 +1,4 @@
 vendor
+.gitattributes
+.gitignore
+README.md
