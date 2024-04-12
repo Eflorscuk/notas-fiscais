@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    
+  db:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+      MYSQL_USER: ${DB_USERNAME:-username}
+    volumes:
+      - ./.docker/mysql/dbdata:/var/lib/mysql
+    ports:
+      - "3388:3306"
+    networks:
+      - laravel
+
+  node_service:
+    build:
+      context: ./verificador-nota
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./verificador-nota:/app
+    depends_on:
+      - db
