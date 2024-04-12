@@ -33,15 +33,13 @@ services:
       - ./.docker/mysql/dbdata:/var/lib/mysql
     ports:
       - "3388:3306"
-    networks:
-      - laravel
 
-  node_service:
-    build:
-      context: ./verificador-nota
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./verificador-nota:/app
-    depends_on:
-      - db
+  # node_service:
+  #   build:
+  #     context: ./verificador-nota
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./verificador-nota:/app
+  #   depends_on:
+  #     - db
