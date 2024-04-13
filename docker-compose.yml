@@ -34,12 +34,10 @@ services:
     ports:
       - "3388:3306"
 
-  # node_service:
-  #   build:
-  #     context: ./verificador-nota
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./verificador-nota:/app
-  #   depends_on:
-  #     - db
+  node-service:
+    build:
+      context: ./verificador-nota
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./verificador-nota:/app
