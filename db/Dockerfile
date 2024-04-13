@@ -1,9 +1,10 @@
 FROM mysql:5.7.22
 
-COPY .env /usr/src/app/.env
+ENV MYSQL_DATABASE loja
+ENV MYSQL_ROOT_PASSWORD root
+ENV MYSQL_PASSWORD admin
+ENV MYSQL_USER admin
 
-RUN set -o allexport && . /usr/src/app/.env && set +o allexport
+COPY ./script/ /docker-entrypoint-initdb.d/
 
-COPY ./schema.sql /docker-entrypoint-initdb.d/
-
-ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+#docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=RootPassword -e MYSQL_DATABASE=Backoffice -e MYSQL_USER=MainUser -e MYSQL_PASSWORD=MainPassword backoffice-db

@@ -32,3 +32,5 @@ RUN cp .env.example .env && \
 CMD php artisan serve --host=0.0.0.0 --port=8181
 
 EXPOSE 8181
+
+#docker run -v .:/var/www -p 8181:8181 nome_da_imagem
