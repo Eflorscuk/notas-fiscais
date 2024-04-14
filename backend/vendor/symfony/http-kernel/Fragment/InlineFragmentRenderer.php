@@ -27,23 +27,21 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class InlineFragmentRenderer extends RoutableFragmentRenderer
 {
-    private $kernel;
-    private $dispatcher;
+    private HttpKernelInterface $kernel;
+    private ?EventDispatcherInterface $dispatcher;
 
-    public function __construct(HttpKernelInterface $kernel, ?EventDispatcherInterface $dispatcher = null)
+    public function __construct(HttpKernelInterface $kernel, EventDispatcherInterface $dispatcher = null)
     {
         $this->kernel = $kernel;
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * Additional available options:
      *
      *  * alt: an alternative URI to render in case of an error
      */
-    public function render($uri, Request $request, array $options = [])
+    public function render(string|ControllerReference $uri, Request $request, array $options = []): Response
     {
         $reference = null;
         if ($uri instanceof ControllerReference) {
@@ -120,9 +118,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
 
         static $setSession;
 
-        if (null === $setSession) {
-            $setSession = \Closure::bind(static function ($subRequest, $request) { $subRequest->session = $request->session; }, null, Request::class);
-        }
+        $setSession ??= \Closure::bind(static function ($subRequest, $request) { $subRequest->session = $request->session; }, null, Request::class);
         $setSession($subRequest, $request);
 
         if ($request->get('_format')) {
@@ -135,10 +131,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
         return $subRequest;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'inline';
     }

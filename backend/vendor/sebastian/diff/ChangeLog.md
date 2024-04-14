@@ -2,28 +2,45 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [3.0.6] - 2023-03-02
+## [5.0.0] - 2022-02-03
 
 ### Changed
 
-* Do not use implicitly nullable parameters
+* Passing a `DiffOutputBuilderInterface` instance to `Differ::__construct()` is no longer optional
 
-## [3.0.5] - 2023-03-01
+### Removed
 
-* No code changes, only updated `.gitattributes` to not export non-essential files.
+* Removed support for PHP 7.3, PHP 7.4, and PHP 8.0
 
-## [3.0.4] - 2023-05-07
+## [4.0.4] - 2020-10-26
+
+### Fixed
+
+* `SebastianBergmann\Diff\Exception` now correctly extends `\Throwable`
+
+## [4.0.3] - 2020-09-28
 
 ### Changed
 
-* [#118](https://github.com/sebastianbergmann/diff/pull/118): Improve performance of `MemoryEfficientLongestCommonSubsequenceCalculator`
-* [#119](https://github.com/sebastianbergmann/diff/pull/119): Improve performance of `TimeEfficientLongestCommonSubsequenceCalculator`
+* Changed PHP version constraint in `composer.json` from `^7.3 || ^8.0` to `>=7.3`
 
-## [3.0.3] - 2020-11-30
+## [4.0.2] - 2020-06-30
 
-### Changed
+### Added
 
-* Changed PHP version constraint in `composer.json` from `^7.1` to `>=7.1`
+* This component is now supported on PHP 8
+
+## [4.0.1] - 2020-05-08
+
+### Fixed
+
+* [#99](https://github.com/sebastianbergmann/diff/pull/99): Regression in unified diff output of identical strings
+
+## [4.0.0] - 2020-02-07
+
+### Removed
+
+* Removed support for PHP 7.1 and PHP 7.2
 
 ## [3.0.2] - 2019-02-04
 
@@ -51,28 +68,30 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ### Fixed
 
-* Fixed [#70](https://github.com/sebastianbergmann/diff/issues/70): Diffing of arrays no longer works
+* [#70](https://github.com/sebastianbergmann/diff/issues/70): Diffing of arrays no longer works
 
 ## [2.0.1] - 2017-08-03
 
 ### Fixed
 
-* Fixed [#66](https://github.com/sebastianbergmann/diff/pull/66): Restored backwards compatibility for PHPUnit 6.1.4, 6.2.0, 6.2.1, 6.2.2, and 6.2.3
+* [#66](https://github.com/sebastianbergmann/diff/pull/66): Restored backwards compatibility for PHPUnit 6.1.4, 6.2.0, 6.2.1, 6.2.2, and 6.2.3
 
 ## [2.0.0] - 2017-07-11 [YANKED]
 
 ### Added
 
-* Implemented [#64](https://github.com/sebastianbergmann/diff/pull/64): Show line numbers for chunks of a diff
+* [#64](https://github.com/sebastianbergmann/diff/pull/64): Show line numbers for chunks of a diff
 
 ### Removed
 
 * This component is no longer supported on PHP 5.6
 
-[3.0.6]: https://github.com/sebastianbergmann/diff/compare/3.0.5...3.0.6
-[3.0.5]: https://github.com/sebastianbergmann/diff/compare/3.0.4...3.0.5
-[3.0.4]: https://github.com/sebastianbergmann/diff/compare/3.0.3...3.0.4
-[3.0.3]: https://github.com/sebastianbergmann/diff/compare/3.0.2...3.0.3
+[5.0.0]: https://github.com/sebastianbergmann/diff/compare/4.0.4...5.0.0
+[4.0.4]: https://github.com/sebastianbergmann/diff/compare/4.0.3...4.0.4
+[4.0.3]: https://github.com/sebastianbergmann/diff/compare/4.0.2...4.0.3
+[4.0.2]: https://github.com/sebastianbergmann/diff/compare/4.0.1...4.0.2
+[4.0.1]: https://github.com/sebastianbergmann/diff/compare/4.0.0...4.0.1
+[4.0.0]: https://github.com/sebastianbergmann/diff/compare/3.0.2...4.0.0
 [3.0.2]: https://github.com/sebastianbergmann/diff/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/sebastianbergmann/diff/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sebastianbergmann/diff/compare/2.0...3.0.0

@@ -1,39 +1,68 @@
-version: '3.7'
+version: "3.7"
 
 services:
-  backend:
-    build: 
-      context: ./backend
-    ports:
-      - "8181:8181"
-    volumes:
-      - ./backend:/var/www
-    
+    # image project
+    app:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./backend:/var/www
+        depends_on:
+            - redis
+        networks:
+            - laravel
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./frontend:/app
-  #   depends_on:
-  #     - backend
-    
-  db:
-    #image: mysql:5.7.22
-    build: 
-      context: ./db
-    restart: unless-stopped
-    volumes:
-      - ./db:/var/lib/mysql
-    ports:
-      - "3388:3306"
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+            - ./backend:/var/www
+            - ./backend/docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - laravel
 
-  # node-service:
-  #   build:
-  #     context: ./verificador-nota
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./verificador-nota:/app
+    # db mysql
+    db:
+        image: mysql:5.7.22
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-loja}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-admin}
+            MYSQL_USER: ${DB_USERNAME:-admin}
+        volumes:
+            - ./backend/.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3388:3306"
+        networks:
+            - laravel
+
+    # queue
+    queue:
+        image: especializati/laravel9-app
+        restart: unless-stopped
+        command: "php artisan queue:work"
+        volumes:
+            - ./backend:/var/www
+        depends_on:
+            - redis
+            - app
+        networks:
+            - laravel
+
+    # redis
+    redis:
+        image: redis:latest
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge

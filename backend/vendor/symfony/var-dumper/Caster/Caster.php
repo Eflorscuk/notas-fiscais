@@ -42,12 +42,12 @@ class Caster
      *
      * @param bool $hasDebugInfo Whether the __debugInfo method exists on $obj or not
      */
-    public static function castObject(object $obj, string $class, bool $hasDebugInfo = false, ?string $debugClass = null): array
+    public static function castObject(object $obj, string $class, bool $hasDebugInfo = false, string $debugClass = null): array
     {
         if ($hasDebugInfo) {
             try {
                 $debugInfo = $obj->__debugInfo();
-            } catch (\Throwable $e) {
+            } catch (\Throwable) {
                 // ignore failing __debugInfo()
                 $hasDebugInfo = false;
             }
@@ -61,7 +61,7 @@ class Caster
 
         if ($a) {
             static $publicProperties = [];
-            $debugClass = $debugClass ?? get_debug_type($obj);
+            $debugClass ??= get_debug_type($obj);
 
             $i = 0;
             $prefixedKeys = [];

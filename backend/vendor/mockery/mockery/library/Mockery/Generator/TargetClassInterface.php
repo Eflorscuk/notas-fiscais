@@ -1,11 +1,21 @@
 <?php
-
 /**
- * Mockery (https://docs.mockery.io/)
+ * Mockery
  *
- * @copyright https://github.com/mockery/mockery/blob/HEAD/COPYRIGHT.md
- * @license https://github.com/mockery/mockery/blob/HEAD/LICENSE BSD 3-Clause License
- * @link https://github.com/mockery/mockery for the canonical source repository
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://github.com/padraic/mockery/blob/master/LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to padraic@php.net so we can send you a copy immediately.
+ *
+ * @category   Mockery
+ * @package    Mockery
+ * @copyright  Copyright (c) 2010 Pádraic Brady (http://blog.astrumfutura.com)
+ * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
 
 namespace Mockery\Generator;
@@ -13,18 +23,21 @@ namespace Mockery\Generator;
 interface TargetClassInterface
 {
     /**
-     * Returns the targetClass's attributes.
+     * Returns a new instance of the current
+     * TargetClassInterface's
+     * implementation.
      *
-     * @return array
+     * @param string $name
+     * @return TargetClassInterface
      */
-    public function getAttributes();
+    public static function factory($name);
 
     /**
-     * Returns the targetClass's interfaces.
+     * Returns the targetClass's name.
      *
-     * @return array
+     * @return string
      */
-    public function getInterfaces();
+    public function getName();
 
     /**
      * Returns the targetClass's methods.
@@ -34,11 +47,11 @@ interface TargetClassInterface
     public function getMethods();
 
     /**
-     * Returns the targetClass's name.
+     * Returns the targetClass's interfaces.
      *
-     * @return string
+     * @return array
      */
-    public function getName();
+    public function getInterfaces();
 
     /**
      * Returns the targetClass's namespace name.
@@ -55,31 +68,6 @@ interface TargetClassInterface
     public function getShortName();
 
     /**
-     * Returns whether the targetClass has
-     * an internal ancestor.
-     *
-     * @return boolean
-     */
-    public function hasInternalAncestor();
-
-    /**
-     * Returns whether the targetClass is in
-     * the passed interface.
-     *
-     * @param mixed $interface
-     *
-     * @return boolean
-     */
-    public function implementsInterface($interface);
-
-    /**
-     * Returns whether the targetClass is in namespace.
-     *
-     * @return boolean
-     */
-    public function inNamespace();
-
-    /**
      * Returns whether the targetClass is abstract.
      *
      * @return boolean
@@ -94,13 +82,26 @@ interface TargetClassInterface
     public function isFinal();
 
     /**
-     * Returns a new instance of the current
-     * TargetClassInterface's
-     * implementation.
+     * Returns whether the targetClass is in namespace.
      *
-     * @param string $name
-     *
-     * @return TargetClassInterface
+     * @return boolean
      */
-    public static function factory($name);
+    public function inNamespace();
+
+    /**
+     * Returns whether the targetClass is in
+     * the passed interface.
+     *
+     * @param mixed $interface
+     * @return boolean
+     */
+    public function implementsInterface($interface);
+
+    /**
+     * Returns whether the targetClass has
+     * an internal ancestor.
+     *
+     * @return boolean
+     */
+    public function hasInternalAncestor();
 }
