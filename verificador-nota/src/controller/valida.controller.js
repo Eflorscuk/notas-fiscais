@@ -12,7 +12,7 @@ function validaCnpj(req, res){
 
         if(!isValid) {
             const horaAtual = new Date().toLocaleString();
-            console.log(`CNPJ inválido ${cnpj} inserido em ${horaAtual}`);
+            console.log(`CNPJ inválido ${cnpj ? cnpj : ""} inserido em ${horaAtual}`);
         }
 
         res.json({ isValid });
