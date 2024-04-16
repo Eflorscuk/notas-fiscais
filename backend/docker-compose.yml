@@ -1,5 +1,14 @@
 version: '3'
 services:
+  # Frontend
+  frontend:
+    image: node:16.16-alpine
+    working_dir: /app
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "8080:8080"
+    command: npm run serve
   # JS Verificador
   verificador:
     build:
