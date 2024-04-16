@@ -1,6 +1,18 @@
 version: '3'
 services:
-
+  # JS Verificador
+  verificador:
+    build:
+        context: ../verificador-nota
+        dockerfile: Dockerfile
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+        - ../verificador-nota:/app
+    networks:
+        - app-network
+    ports:
+        - "3000:3000"
   #PHP Service
   app:
     build:
