@@ -2,15 +2,11 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [5.0.0] - 2023-02-03
+## [4.0.6] - 2024-03-02
 
 ### Changed
 
-* [#42](https://github.com/sebastianbergmann/exporter/pull/42): Improve export of enumerations
-
-### Removed
-
-* This component is no longer supported on PHP 7.3, PHP 7.4 and PHP 8.0
+* Do not use implicitly nullable parameters
 
 ## [4.0.5] - 2022-09-14
 
@@ -76,7 +72,7 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 * Remove HHVM-specific code that is no longer needed
 
-[5.0.0]: https://github.com/sebastianbergmann/exporter/compare/4.0.5...5.0.0
+[4.0.6]: https://github.com/sebastianbergmann/exporter/compare/4.0.5...4.0.6
 [4.0.5]: https://github.com/sebastianbergmann/exporter/compare/4.0.4...4.0.5
 [4.0.4]: https://github.com/sebastianbergmann/exporter/compare/4.0.3...4.0.4
 [4.0.3]: https://github.com/sebastianbergmann/exporter/compare/4.0.2...4.0.3

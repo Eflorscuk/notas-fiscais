@@ -1,27 +1,19 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\ReplySupportApiController;
-use App\Http\Controllers\Api\SupportController;
-use App\Http\Controllers\NotaFiscalController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
 
-Route::get('/nota-fiscal', [NotaFiscalController::class, 'store']);
-// Route::get('/nota-fiscal', function(){
-//     dd('teste');
-// });
-Route::get('/nota-fiscal/{chave}', [NotaFiscalController::class, 'show']);
-
-// Route::post('/login', [AuthController::class, 'auth']);
-// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-// Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
-
-// Route::middleware(['auth:sanctum'])->group(function () {
-//     Route::get('/replies/{support_id}', [ReplySupportApiController::class, 'getRepliesFromSupport']);
-//     Route::post('/replies/{support_id}', [ReplySupportApiController::class, 'createNewReply']);
-//     Route::delete('/replies/{id}', [ReplySupportApiController::class, 'destroy']);
-
-//     Route::apiResource('/supports', SupportController::class);
-// });
-// Route::apiResource('/supports', SupportController::class)->middleware('auth');
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});

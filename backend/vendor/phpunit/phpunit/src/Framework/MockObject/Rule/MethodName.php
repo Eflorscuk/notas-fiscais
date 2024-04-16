@@ -11,6 +11,7 @@ namespace PHPUnit\Framework\MockObject\Rule;
 
 use function is_string;
 use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\InvalidArgumentException;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 use PHPUnit\Framework\MockObject\MethodNameConstraint;
@@ -20,15 +21,24 @@ use PHPUnit\Framework\MockObject\MethodNameConstraint;
  */
 final class MethodName
 {
-    private readonly Constraint $constraint;
+    /**
+     * @var Constraint
+     */
+    private $constraint;
 
     /**
+     * @param Constraint|string $constraint
+     *
      * @throws InvalidArgumentException
      */
-    public function __construct(Constraint|string $constraint)
+    public function __construct($constraint)
     {
         if (is_string($constraint)) {
             $constraint = new MethodNameConstraint($constraint);
+        }
+
+        if (!$constraint instanceof Constraint) {
+            throw InvalidArgumentException::create(1, 'PHPUnit\Framework\Constraint\Constraint object or string');
         }
 
         $this->constraint = $constraint;
@@ -40,15 +50,17 @@ final class MethodName
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
      */
     public function matches(BaseInvocation $invocation): bool
     {
-        return $this->matchesName($invocation->methodName());
+        return $this->matchesName($invocation->getMethodName());
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
      */
     public function matchesName(string $methodName): bool
     {

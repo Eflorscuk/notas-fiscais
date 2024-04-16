@@ -24,16 +24,20 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
  */
 class TimeDataCollector extends DataCollector implements LateDataCollectorInterface
 {
-    private ?KernelInterface $kernel;
-    private ?Stopwatch $stopwatch;
+    private $kernel;
+    private $stopwatch;
 
-    public function __construct(KernelInterface $kernel = null, Stopwatch $stopwatch = null)
+    public function __construct(?KernelInterface $kernel = null, ?Stopwatch $stopwatch = null)
     {
         $this->kernel = $kernel;
         $this->stopwatch = $stopwatch;
+        $this->data = ['events' => [], 'stopwatch_installed' => false, 'start_time' => 0];
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    /**
+     * {@inheritdoc}
+     */
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         if (null !== $this->kernel) {
             $startTime = $this->kernel->getStartTime();
@@ -49,13 +53,21 @@ class TimeDataCollector extends DataCollector implements LateDataCollectorInterf
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function reset()
     {
-        $this->data = [];
+        $this->data = ['events' => [], 'stopwatch_installed' => false, 'start_time' => 0];
 
-        $this->stopwatch?->reset();
+        if (null !== $this->stopwatch) {
+            $this->stopwatch->reset();
+        }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function lateCollect()
     {
         if (null !== $this->stopwatch && isset($this->data['token'])) {
@@ -122,6 +134,9 @@ class TimeDataCollector extends DataCollector implements LateDataCollectorInterf
         return $this->data['stopwatch_installed'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return 'time';
