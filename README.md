@@ -95,7 +95,8 @@ FLUSH PRIVILEGES;
 Será executado quando os containers estiverem up.
 
 ## Frontend
-
-:construction:EM CONSTRUÇÃO:construction: 
+http://localhost:8080/buscar este é o link para acessar o frontend.
+O frontend foi construído em Vue e está dividido em 2 partes: Buscar e Sobre.
+Em "buscar" é possível verificar se existe ou não alguma nota-fiscal com determinada chave no banco de dados.
 
 
