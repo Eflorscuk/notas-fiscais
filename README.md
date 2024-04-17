@@ -99,4 +99,8 @@ http://localhost:8080/buscar este é o link para acessar o frontend.
 O frontend foi construído em Vue e está dividido em 2 partes: Buscar e Sobre.
 Em "buscar" é possível verificar se existe ou não alguma nota-fiscal com determinada chave no banco de dados.
 
+## Testes
+### Verificador-notas
+Para executar testes unitários no Verificador-notas execute na raiz deste serviço npm test. 
+
 
