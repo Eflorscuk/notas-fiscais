@@ -2,34 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NotaFiscal;
+//use App\Models\NotaFiscal;
 use App\NotaFiscal as AppNotaFiscal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class NotaFiscalController extends Controller
 {
     public function store(Request $request)
     {
-        // Validar os dados da requisição
-        $request->validate([
-            'chave' => 'required|string|min:44|max:44',
-            'data_emissao' => 'required|date',
-            'data_recebimento' => 'required|date',
-            'cnpj' => 'required|string|size:14',
-        ]);
+        try {
+            $dadosValidados = $request->validate([
+                'chave' => 'required|string|size:44',
+                'data_emissao' => 'required|date',
+                'data_recebimento' => 'required|date',
+                'cnpj' => 'required|string|size:14',
+            ]);
+            $data = ['cnpj' => $request->cnpj];
+            $cnpjValido = $this->validaCnpj($data);
 
-        // Verificar se a nota fiscal possui CNPJ da Madeira
-        if ($request->cnpj !== '00000000000000') { // Supondo que o CNPJ da Madeira seja 00000000000000
-            Log::info('Tentativa de inserção de nota fiscal com CNPJ inválido: ' . $request->cnpj);
-            return response()->json(['error' => 'CNPJ inválido'], 400);
+            if(!$cnpjValido){
+                return response()->json(['error' => "CNPJ não válido"], 400);
+            }
+
+            if($dadosValidados && $cnpjValido){
+                $notaFiscal = AppNotaFiscal::salvarNotaFiscal($dadosValidados);
+                dd($notaFiscal);
+                return response()->json($notaFiscal, 201);
+            }
+
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            return response()->json(['error' => $errors ], 400);
         }
 
+        // $responseData = json_decode($response, true);
 
-        // Criar a nota fiscal
-        $notaFiscal = AppNotaFiscal::create($request->all());
+        // if(isset($responseData['isValid']) && $responseData['isValid'] === true){
+        //     $notaFiscal = AppNotaFiscal::create($request->all());
+        //     return response()->json($notaFiscal, 201);
+        // } else {
+        //     Log::info('Tentativa de inserção de nota fiscal com CNPJ inválido: ' . $request->cnpj);
+        //     return response()->json(['error' => 'CNPJ inválido'], 400);
+        // }
 
-        return response()->json($notaFiscal, 201);
+    }
+
+    public function validaCnpj($data)
+    {
+        try {
+            $cnpj = $data['cnpj'];
+            $response = Http::get('http://verificador:3000/valida/' . $cnpj);
+
+            if($response->successful()){
+                $conteudo = $response->body();
+                return response()->json(['cnpj-valido' => $conteudo]);
+            } else {
+                $statusCode = $response->status();
+                return response()->json(['error' => 'Erro ao acessar a URL', 'status' => $statusCode]);
+            }
+
+
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            return response()->json(['error' => $errors ], 400);
+        }
     }
 
     public function show($chave)

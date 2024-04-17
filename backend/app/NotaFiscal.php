@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotaFiscal extends Model
 {
-    public function getStatus()
+    protected $table = 'notas_fiscais';
+
+    protected $fillable = ['chave', 'data_emissao', 'data_recebimento', 'cnpj'];
+
+    public static function salvarNotaFiscal($dadosValidados)
     {
-        // Exemplo: retornar o status com base na data de recebimento
-        if ($this->data_recebimento) {
-            return 'Recebida';
-        } else {
-            return 'Pendente';
-        }
+        $notaFiscal = new NotaFiscal($dadosValidados);
+        $notaFiscal->save();
+        dd($notaFiscal);
+        return $notaFiscal;
     }
 }
