@@ -2,7 +2,7 @@ version: '3'
 services:
   # Frontend
   frontend:
-    image: node:16.16-alpine
+    image: node:18.19-alpine
     working_dir: /app
     volumes:
       - ../frontend:/app

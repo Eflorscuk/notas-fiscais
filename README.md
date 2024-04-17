@@ -60,12 +60,13 @@ docker-composer exec app php artisan config:cache
 13. Exemplo de dado para ser enviado via postman (POST) para nota-fiscal:
 ```dosini
 {
-    "chave": "9!Q#mX87tsnNDEx95adDBRUx*cST#2#^syvzfzoxkLCP",
+    "chave": "kHHJffbBPx9kTXacr7cDtKX6FeUk7CJXo4wuyMNkKvSa,
     "data_emissao": "2024-04-17",
     "data_recebimento": "2024-04-17",
     "cnpj": "10490181000569"
 }
 ```
+14. Acesse http://localhost:8081/api/nota-fiscal/{chave} para fazer uma consulta no banco de dados para verificar se determinada nota-fiscal existe.
 
 ## Configuração do DB
 1. Acesse o serviço de DB:
@@ -90,8 +91,8 @@ FLUSH PRIVILEGES;
 ```
 6. E saia do MySQL e do container, respectivamente, com os comandos ```exit;``` e ```exit```.
 
-## Serviço JS - Verofocador-nota
-Ao realizar o comando docker-compose build e docker-compose up -d é para já fazer funcionar o serviço, sendo que este rodará em http://localhost:3000/
+## Serviço JS - Verificador-nota
+Será executado quando os containers estiverem up.
 
 ## Frontend
 
