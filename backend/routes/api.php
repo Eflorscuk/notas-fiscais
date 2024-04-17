@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/nota-fiscal', [NotaFiscalController::class, 'store']);
 Route::get('/nota-fiscal/{chave}', [NotaFiscalController::class, 'show']);
+Route::get('/', function(){
+    dd('estou sendo chamado');
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
