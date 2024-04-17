@@ -55,6 +55,18 @@ docker-composer exec app php artisan config:cache
 
 11. Acesse o http://localhost:8081/ para verificar se está funcionando a parte do laravel.
 
+12. Acesse http://localhost:8081/api/nota-fiscal para acessar a rota para adicionar uma nova nota no sistema.
+
+13. Exemplo de dado para ser enviado via postman (POST) para nota-fiscal:
+```dosini
+{
+    "chave": "9!Q#mX87tsnNDEx95adDBRUx*cST#2#^syvzfzoxkLCP",
+    "data_emissao": "2024-04-17",
+    "data_recebimento": "2024-04-17",
+    "cnpj": "10490181000569"
+}
+```
+
 ## Configuração do DB
 1. Acesse o serviço de DB:
 ```sh
