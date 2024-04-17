@@ -37,17 +37,6 @@ class NotaFiscalController extends Controller
             $errors = $e->errors();
             return response()->json(['error' => $errors ], 400);
         }
-
-        // $responseData = json_decode($response, true);
-
-        // if(isset($responseData['isValid']) && $responseData['isValid'] === true){
-        //     $notaFiscal = AppNotaFiscal::create($request->all());
-        //     return response()->json($notaFiscal, 201);
-        // } else {
-        //     Log::info('Tentativa de inserção de nota fiscal com CNPJ inválido: ' . $request->cnpj);
-        //     return response()->json(['error' => 'CNPJ inválido'], 400);
-        // }
-
     }
 
     public function validaCnpj($data)
@@ -73,7 +62,7 @@ class NotaFiscalController extends Controller
 
     public function show($chave)
     {
-        $notaFiscal = AppNotaFiscal::where('chave', $chave)->first();
+        $notaFiscal = AppNotaFiscal::where('chave', $chave)->get();
 
         if (!$notaFiscal) {
             return response()->json(['error' => 'Nota fiscal não encontrada'], 404);

@@ -14,7 +14,6 @@ class NotaFiscal extends Model
     {
         $notaFiscal = new NotaFiscal($dadosValidados);
         $notaFiscal->save();
-        dd($notaFiscal);
         return $notaFiscal;
     }
 }
